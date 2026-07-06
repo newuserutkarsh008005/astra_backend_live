@@ -654,30 +654,9 @@ catch(e){
 
 
 
-app.post("/getimage", upload.single("file"), async (req, res) => {
-  try {
-    console.log(req.file.buffer);
-    console.log(req.body);
 
-    const link = await lin(req.file.buffer);
-
-    return res.status(201).json({
-      success: true,
-      link: link.url,
-    });
-  } catch (error) {
-    console.error(error);
-
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
   
-app.put("/updateprofile", async (req, res) => {
- log(req.body)
-});
+
 
 app.post('/get_payment_details',async (req,res)=>{
   try{
