@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id String @id @default(uuid())
+
+  auth0Id String @unique
+
+  email String  @unique
+  name  String
+  phone String?
+
+  profileImage String?
+
+  dateOfBirth DateTime?
+  birthTime   String?
+  birthPlace  String?
+
+  gender String?
+
+  isPremium Boolean @default(false)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[]
+  booking   Booking[]
+}
+
+model Service {
+  id String @id @default(uuid())
+
+  title       String
+  category    String
+  description String
+  image       String
+
+  price Float
+
+  payments Payment[]
+
+  createdAt DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+  booking   Booking[]
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+model Payment {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  razorpayOrderId   String @unique
+  razorpayPaymentId String @unique
+
+  amount Float
+
+  status PaymentStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  booking   Booking?
+}
+
+enum slotStatus {
+  AVAILABLE
+  RESERVED
+  BOOKED
+}
+
+model Slot {
+  id               String     @id @default(uuid())
+  date             DateTime
+  start            String
+  end              String
+  status           slotStatus @default(AVAILABLE)
+  reservedByUserId String?
+  reservedUntill   String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  booking          Booking[]
+}
+
+enum bookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model Booking {
+  id     String @id @default(uuid())
+  userId String?
+  user   User?  @relation(fields: [userId], references: [id])
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  paymentId String?  @unique
+  payment   Payment? @relation(fields: [paymentId], references: [id])
+
+  slotId String 
+  slot   Slot   @relation(fields: [slotId], references: [id])
+
+  meetingroomId String? @unique
+  recordingUrl  String?
+  transcriptUrl String?
+  reportUrl String ?
+  status        bookingStatus @default(PENDING)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Astrologer{
+  id String @id @default(uuid())
+  email String @unique
+  pass String @unique
+}

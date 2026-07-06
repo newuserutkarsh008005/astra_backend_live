@@ -1,0 +1,24 @@
+This side order is creating
+{
+service->  id: 'e47d5b1b-f6d2-4b9a-84d1-4056f742eff6',
+  data: {
+   slot-> id: '310db173-6795-4d53-a2e8-989b5db3b001',
+    date: '2026-07-02T18:30:00.000Z',
+    start: '14:00',
+    end: '15:00',
+    status: 'AVAILABLE',
+    reservedByUserId: null,
+    reservedUntill: null,
+    createdAt: '2026-06-29T21:57:18.835Z',
+    updatedAt: '2026-06-29T21:57:18.835Z'
+  }
+}
+This side 
+99900
+{
+  order_id: 'order_T7t5CKb4iMzAW1',
+  amount: 99900,
+  currency: 'INR',
+  service_title: 'Birth Chart Reading'
+}
+paymentid -> order_id
