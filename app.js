@@ -211,6 +211,7 @@ const userId = booking.userId;
 
   const body =
     razorpay_order_id + "|" + razorpay_payment_id;
+console.log(process.env.Secret);
 
   const expected_signature = crypto
     .createHmac("sha256", process.env.Secret)
