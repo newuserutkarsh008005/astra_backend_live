@@ -113,7 +113,8 @@ app.post('/service/create_order', async (req, res) => {
       currency: "INR",
       receipt: s_data.id
     };
-
+console.log("KEY_ID =", process.env.API_key);
+console.log("SECRET_LENGTH =", process.env.Secret?.length);
     const order = await razorpay.orders.create(option);
 
     const front = {
