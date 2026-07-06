@@ -12,7 +12,7 @@ app.use(express.json())
 import razorpay from './lib/razorpay.js'
 import { slotStatus } from './generated/prisma/index.js'
 import { glob } from 'node:fs'
-import lin from './Services/imagekit.js'
+
 const upload=multer({Storage:multer.memoryStorage()})
 app.post('/', async(req,res)=>{
     try{
