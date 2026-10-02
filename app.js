@@ -712,13 +712,14 @@ app.post('/astra_astrologer_verification',async(req,res)=>{
   }
 
 })
-app.get('/astologer_booking_page', async (req,res)=>{
-  try{
+const startOfToday = new Date();
+startOfToday.setHours(0, 0, 0, 0);
+
 const det = await prisma.booking.findMany({
   where: {
     slot: {
       date: {
-        gte: new Date(),
+        gte: startOfToday,
       },
     },
   },
@@ -740,18 +741,6 @@ const det = await prisma.booking.findMany({
     },
   ],
 });
-  return res.status(200).json({
-    'data':det
-  })
-  }
-  catch(e){
-    return res.status(404).json({
-      'message':e.message
-    })
-  }
-  
-  
-})
 app.post('/astra_booking_completed',async (req,res)=>{
   console.log(req.body.bookingId);
   const daet=await prisma.booking.update({
