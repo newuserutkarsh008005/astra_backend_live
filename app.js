@@ -876,5 +876,48 @@ app.get('/all_services', async (req, res) => {
     });
   }
 });
+app.get('/astologer_booking_page', async (req, res) => {
+  try {
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
 
+    const det = await prisma.booking.findMany({
+      where: {
+        slot: {
+          date: {
+            gte: startOfToday,
+          },
+        },
+      },
+      include: {
+        slot: true,
+        user: true,
+        service: true,
+      },
+      orderBy: [
+        {
+          slot: {
+            date: 'asc',
+          },
+        },
+        {
+          slot: {
+            start: 'asc',
+          },
+        },
+      ],
+    });
+
+    return res.status(200).json({
+      data: det,
+    });
+
+  } catch (e) {
+    console.error(e);
+
+    return res.status(500).json({
+      message: e.message,
+    });
+  }
+});
 export default app
